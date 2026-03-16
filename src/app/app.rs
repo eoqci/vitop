@@ -1,5 +1,7 @@
 use sysinfo::System;
 
+use crate::collector::memory::Memory;
+
 pub struct App {
     pub should_quit: bool,
 
@@ -36,6 +38,10 @@ impl App {
         self.sys.refresh_memory();
         self.ram_used = self.sys.used_memory();
         self.ram_total = self.sys.total_memory();
+    }
+
+    pub fn memory(&self) -> Memory {
+        Memory::from_bytes(self.ram_used, self.ram_total)
     }
     pub fn quit(&mut self) {
         self.should_quit = true;
