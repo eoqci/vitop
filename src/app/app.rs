@@ -1,6 +1,6 @@
 use sysinfo::System;
 
-use crate::collector::memory::Memory;
+use crate::collector::{memory::Memory, process::ProcessInfo};
 
 pub struct App {
     pub should_quit: bool,
@@ -12,6 +12,8 @@ pub struct App {
     pub cpu_usage: f32,
     pub ram_used: u64,
     pub ram_total: u64,
+
+    pub processes: Vec<ProcessInfo>,
 }
 
 impl App {
@@ -26,6 +28,7 @@ impl App {
             cpu_usage: 0.0,
             ram_total: 0,
             ram_used: 0,
+            processes: Vec::new(),
         }
     }
 
@@ -38,6 +41,28 @@ impl App {
         self.sys.refresh_memory();
         self.ram_used = self.sys.used_memory();
         self.ram_total = self.sys.total_memory();
+
+        // Processes
+        self.sys.refresh_processes();
+
+        let mut procs: Vec<ProcessInfo> = self
+            .sys
+            .processes()
+            .iter()
+            .map(|(pid, p)| ProcessInfo {
+                pid: pid.to_string(),
+                name: p.name().to_string(),
+                cpu: p.cpu_usage(),
+                mem: p.memory(),
+            })
+            .collect();
+
+        procs.sort_by(|a, b| {
+            b.cpu
+                .partial_cmp(&a.cpu)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
+        self.processes = procs;
     }
 
     pub fn memory(&self) -> Memory {
