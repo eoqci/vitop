@@ -73,8 +73,8 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
         .bottom_margin(1);
 
     //Data row
-    let rows: Vec<Row> = app
-        .processes
+    let processes = &app.processes;
+    let rows: Vec<Row> = processes
         .iter()
         .map(|p| {
             let mem_mb = p.mem as f64 / 1_048_567.0;

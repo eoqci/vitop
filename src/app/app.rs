@@ -92,9 +92,9 @@ impl App {
         let i = match self.table_state.selected() {
             Some(i) => {
                 if i >= self.processes.len().saturating_sub(1) {
-                    0
+                    self.processes.len().saturating_sub(1)
                 } else {
-                    i + 1
+                    i - 1
                 }
             }
             None => 0,
