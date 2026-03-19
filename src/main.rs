@@ -42,11 +42,25 @@ fn main() -> io::Result<()> {
         if event::poll(timeout)? {
             if let Event::Key(key) = event::read()? {
                 if key.kind == KeyEventKind::Press {
-                    match key.code {
-                        KeyCode::Char('q') => app.quit(),
-                        KeyCode::Down => app.next(),
-                        KeyCode::Up => app.previous(),
-                        _ => {}
+                    // Nếu ĐANG HIỆN POPUP
+                    if app.show_kill_popup {
+                        match key.code {
+                            KeyCode::Char('y') | KeyCode::Char('Y') => app.confirm_kill(),
+                            KeyCode::Char('n') | KeyCode::Char('N') | KeyCode::Esc => {
+                                app.close_popup()
+                            }
+                            _ => {} // Các phím khác bỏ qua
+                        }
+                    }
+                    // Nếu ĐANG Ở MÀN HÌNH CHÍNH
+                    else {
+                        match key.code {
+                            KeyCode::Char('q') => app.quit(),
+                            KeyCode::Down => app.next(),
+                            KeyCode::Up => app.previous(),
+                            KeyCode::Char('k') => app.ask_to_kill(), // Bấm 'k' để mở popup
+                            _ => {}
+                        }
                     }
                 }
             }

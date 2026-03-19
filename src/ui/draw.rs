@@ -2,7 +2,7 @@ use ratatui::{
     Frame,
     layout::{Constraint, Layout},
     style::{Color, Modifier, Style},
-    widgets::{Block, Borders, Cell, Gauge, Paragraph, Row, Table},
+    widgets::{Block, Borders, Cell, Clear, Gauge, Paragraph, Row, Table},
 };
 
 use crate::app::app::App;
@@ -112,4 +112,58 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
     let footer = Paragraph::new(" [q] Thoát | [Up/Down] Cuộn chuột")
         .block(Block::default().title(" Hướng dẫn ").borders(Borders::ALL));
     f.render_widget(footer, chunks[2]);
+
+    // ================| Popup Kill Process |================
+    if app.show_kill_popup {
+        let target_name = app.target_name.as_deref().unwrap_or("Unknown");
+        let target_pid = app.target_pid.as_deref().unwrap_or("0");
+
+        let popup_text = format!(
+            "\n Vợ có chắc chắn muốn Kill tiến trình này không? \n\n Name: {} \n PID: {} \n\n [Y] Yes   /   [N] No ",
+            target_name, target_pid
+        );
+
+        let popup = Paragraph::new(popup_text)
+            .style(Style::default().bg(Color::Red).fg(Color::White)) // Nền đỏ chữ trắng cho cảnh báo
+            .alignment(ratatui::layout::Alignment::Center)
+            .block(
+                Block::default()
+                    .title(" CẢNH BÁO ")
+                    .borders(Borders::ALL)
+                    .border_style(Style::default().fg(Color::White)),
+            );
+
+        // Tạo một cái khung nhỏ ở chính giữa màn hình (rộng 60%, cao 30%)
+        let area = centered_rect(60, 30, f.size());
+
+        // 1. Dùng Clear để xóa sạch cái bảng Process nằm dưới cái khung này
+        f.render_widget(Clear, area);
+        // 2. Vẽ cái Popup đè lên
+        f.render_widget(popup, area);
+    }
+}
+
+// Helper function: Hàm tính toán để tạo một ô hình chữ nhật nằm chính giữa màn hình
+fn centered_rect(
+    percent_x: u16,
+    percent_y: u16,
+    r: ratatui::layout::Rect,
+) -> ratatui::layout::Rect {
+    let popup_layout = Layout::default()
+        .direction(ratatui::layout::Direction::Vertical)
+        .constraints([
+            Constraint::Percentage((100 - percent_y) / 2),
+            Constraint::Percentage(percent_y),
+            Constraint::Percentage((100 - percent_y) / 2),
+        ])
+        .split(r);
+
+    Layout::default()
+        .direction(ratatui::layout::Direction::Horizontal)
+        .constraints([
+            Constraint::Percentage((100 - percent_x) / 2),
+            Constraint::Percentage(percent_x),
+            Constraint::Percentage((100 - percent_x) / 2),
+        ])
+        .split(popup_layout[1])[1]
 }

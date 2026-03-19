@@ -1,6 +1,8 @@
+use std::str::FromStr;
+
 use crate::collector::{memory::Memory, process::ProcessInfo};
 use ratatui::widgets::TableState;
-use sysinfo::{CpuRefreshKind, MemoryRefreshKind, ProcessRefreshKind, RefreshKind, System};
+use sysinfo::{CpuRefreshKind, MemoryRefreshKind, Pid, ProcessRefreshKind, RefreshKind, System};
 
 pub struct App {
     pub should_quit: bool,
@@ -10,6 +12,10 @@ pub struct App {
     pub ram_total: u64,
     pub processes: Vec<ProcessInfo>,
     pub table_state: TableState,
+
+    pub show_kill_popup: bool,
+    pub target_pid: Option<String>,
+    pub target_name: Option<String>,
 }
 
 impl App {
@@ -36,6 +42,10 @@ impl App {
             ram_used: 0,
             processes: Vec::new(),
             table_state,
+
+            show_kill_popup: false,
+            target_pid: None,
+            target_name: None,
         }
     }
 
@@ -99,6 +109,32 @@ impl App {
             None => 0,
         };
         self.table_state.select(Some(i));
+    }
+
+    pub fn ask_to_kill(&mut self) {
+        if let Some(i) = self.table_state.selected() {
+            if let Some(p) = self.processes.get(i) {
+                self.target_pid = Some(p.pid.clone());
+                self.target_name = Some(p.name.clone());
+                self.show_kill_popup = true;
+            }
+        }
+    }
+
+    pub fn confirm_kill(&mut self) {
+        if let Some(pid_str) = &self.target_pid {
+            if let Ok(pid) = Pid::from_str(pid_str) {
+                if let Some(process) = self.sys.process(pid) {
+                    process.kill();
+                }
+            }
+        }
+    }
+
+    pub fn close_popup(&mut self) {
+        self.show_kill_popup = false;
+        self.target_pid = None;
+        self.target_name = None;
     }
     pub fn memory(&self) -> Memory {
         Memory::from_bytes(self.ram_used, self.ram_total)
