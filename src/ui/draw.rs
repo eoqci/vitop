@@ -77,7 +77,7 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
     let rows: Vec<Row> = processes
         .iter()
         .map(|p| {
-            let mem_mb = p.mem as f64 / 1_048_567.0;
+            let mem_mb = p.mem as f64 / 1_048_576.0;
 
             Row::new(vec![
                 Cell::from(p.pid.clone()),

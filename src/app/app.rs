@@ -40,7 +40,7 @@ impl App {
     }
 
     pub fn update_data(&mut self) {
-        // CPU
+        // CPU global
         self.sys
             .refresh_cpu_specifics(CpuRefreshKind::new().with_cpu_usage());
         self.cpu_usage = self.sys.global_cpu_info().cpu_usage();
@@ -51,7 +51,10 @@ impl App {
         self.ram_used = self.sys.used_memory();
         self.ram_total = self.sys.total_memory();
 
-        // Processes — only cpu + memory
+        // Processes — refresh 2 lần cách nhau để có CPU usage chính xác
+        self.sys
+            .refresh_processes_specifics(ProcessRefreshKind::new().with_cpu().with_memory());
+        std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL); // ~200ms
         self.sys
             .refresh_processes_specifics(ProcessRefreshKind::new().with_cpu().with_memory());
 
@@ -67,11 +70,7 @@ impl App {
             })
             .collect();
 
-        procs.sort_by(|a, b| {
-            b.cpu
-                .partial_cmp(&a.cpu)
-                .unwrap_or(std::cmp::Ordering::Equal)
-        });
+        procs.sort_by(|a, b| b.mem.cmp(&a.mem));
         self.processes = procs;
     }
 
@@ -91,7 +90,7 @@ impl App {
     pub fn previous(&mut self) {
         let i = match self.table_state.selected() {
             Some(i) => {
-                if i >= self.processes.len().saturating_sub(1) {
+                if i == 0 {
                     self.processes.len().saturating_sub(1)
                 } else {
                     i - 1
