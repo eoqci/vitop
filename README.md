@@ -1,43 +1,166 @@
-# 🚀 Vitop (Mini htop for Windows)
+<div align="center">
 
-A blazing-fast, lightweight, and interactive terminal-based system monitor specifically optimized for Windows 11. Written entirely in **Rust**.
+```
+██╗   ██╗██╗████████╗ ██████╗ ██████╗ 
+██║   ██║██║╚══██╔══╝██╔═══██╗██╔══██╗
+██║   ██║██║   ██║   ██║   ██║██████╔╝
+╚██╗ ██╔╝██║   ██║   ██║   ██║██╔═══╝ 
+ ╚████╔╝ ██║   ██║   ╚██████╔╝██║     
+  ╚═══╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝     
+                                      
+```
 
-Inspired by Linux's legendary `htop`, this tool brings a clean, multi-threaded Terminal User Interface (TUI) to your Windows command line, allowing you to monitor system resources and manage processes without the overhead of the heavy GUI Task Manager.
+**A blazing-fast, lightweight terminal system monitor for Windows 11 — inspired by `htop`.**
 
-## ✨ Features
+<br/>
 
-* **Real-time Resource Monitoring:** Live CPU and Memory usage visualized with responsive, color-coded gauges.
-* **Interactive Process Table:** View running processes sorted by memory consumption, detailing PID, Name, CPU%, and RAM usage.
-* **Fuzzy Search & Filtering:** Instantly find specific applications hidden in hundreds of background processes using the built-in search bar.
-* **Safe Process Termination:** Kill unresponsive processes directly from the terminal with a built-in safety confirmation popup.
-* **Highly Performant:** Built with a clean architecture separating the data collection thread from the UI rendering thread, ensuring zero UI blocking and minimal footprint.
-* **Memory Safe:** Powered by Rust's strict memory management guarantees.
+[![Rust](https://img.shields.io/badge/built%20with-Rust-f74c00?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Platform](https://img.shields.io/badge/platform-Windows%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://www.microsoft.com/windows/windows)
+[![License](https://img.shields.io/badge/license-MIT-22c55e?style=for-the-badge)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-0.1.0-a78bfa?style=for-the-badge)](https://github.com/LQCpaka/mini_htop/releases)
 
-## 🛠️ Tech Stack
+<br/>
 
-* **[Rust](https://www.rust-lang.org/):** The core language.
-* **[Ratatui](https://github.com/ratatui/ratatui):** For rendering the rich, immediate-mode Terminal User Interface.
-* **[Crossterm](https://github.com/crossterm-rs/crossterm):** For cross-platform terminal manipulation and event handling.
-* **[Sysinfo](https://github.com/GuillaumeGomez/sysinfo):** For low-level system hardware and process information retrieval.
+> *Why open Task Manager when you can look this cool?*
 
-## ⌨️ Keybindings
+<br/>
 
-Navigation and control are designed to be intuitive and keyboard-centric:
+![Demo](https://placehold.co/900x500/0d1117/39d353?text=[ demo gif goes here ]&font=monospace)
+
+</div>
+
+---
+
+## ✦ Why Vitop?
+
+Windows has Task Manager. Windows also has 47 background `svchost.exe` processes you'll never understand. **Vitop** cuts through the noise — a snappy, keyboard-driven TUI that lives in your terminal, monitors your machine in real time, and lets you nuke misbehaving processes without touching a mouse.
+
+No Electron. No .NET. No bloat. Just Rust.
+
+---
+
+## ✦ Features
+
+| | |
+|---|---|
+| 📊 **Live Resource Gauges** | Color-coded CPU and Memory bars that update in real time |
+| 🗂️ **Process Table** | Sorted by memory usage, showing PID, Name, CPU%, and RAM |
+| 🔍 **Fuzzy Search** | Instantly filter through hundreds of processes as you type |
+| 💀 **Safe Kill** | Terminate processes with a built-in confirmation prompt — no accidents |
+| ⚡ **Non-blocking UI** | Separate threads for data collection and rendering; the UI never freezes |
+| 🦀 **Memory Safe** | Zero undefined behavior, guaranteed by the Rust compiler |
+
+---
+
+## ✦ Tech Stack
+
+<div align="center">
+
+| Crate | Role |
+|:---:|:---|
+| [`ratatui`](https://github.com/ratatui/ratatui) | Immediate-mode TUI rendering |
+| [`crossterm`](https://github.com/crossterm-rs/crossterm) | Terminal manipulation & keyboard events |
+| [`sysinfo`](https://github.com/GuillaumeGomez/sysinfo) | System hardware & process data |
+
+</div>
+
+---
+
+## ✦ Keybindings
+
+<div align="center">
 
 | Key | Action |
-| :--- | :--- |
-| `Up` / `Down` | Navigate through the process list |
-| `/` | Enter Search/Filter mode |
-| `Enter` / `Esc` | Exit Search mode / Clear search query |
-| `k` | Attempt to Kill the highlighted process |
-| `y` / `n` | Confirm (`y`) or Cancel (`n`) process termination |
-| `q` | Quit the application gracefully |
+|:---:|:---|
+| `↑` `↓` | Navigate the process list |
+| `/` | Enter search / filter mode |
+| `Enter` `Esc` | Exit search / clear query |
+| `k` | Kill highlighted process |
+| `y` / `n` | Confirm / cancel termination |
+| `q` | Quit gracefully |
 
-## 🚀 Installation & Build
+</div>
 
-Ensure you have [Rust and Cargo](https://rustup.rs/) installed on your Windows machine.
+---
 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/LQCpaka/mini_htop.git](https://github.com/LQCpaka/mini_htop.git)
-   cd vitop
+## ✦ Installation
+
+> **Prerequisite:** [Rust & Cargo](https://rustup.rs/) must be installed.
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/LQCpaka/mini_htop.git
+cd mini_htop
+
+# 2. Build in release mode
+cargo build --release
+
+# 3. Run it
+./target/release/vitop
+```
+
+Or just run without a separate build step:
+
+```bash
+cargo run --release
+```
+
+---
+
+## ✦ Project Structure
+
+```
+vitop/
+├── src/
+│   ├── main.rs          # Entry point, thread setup
+│   ├── app.rs           # Application state
+│   ├── ui.rs            # TUI rendering (ratatui)
+│   ├── system.rs        # Data collection (sysinfo)
+│   └── events.rs        # Keyboard event handling
+├── Cargo.toml
+└── README.md
+```
+
+---
+
+## ✦ Roadmap
+
+- [ ] Network I/O monitoring (upload / download speeds)
+- [ ] Disk usage per drive
+- [ ] Sortable columns (click or key to sort by CPU, RAM, PID, Name)
+- [ ] Process tree view
+- [ ] Config file for custom colors / refresh rate
+- [ ] Package via `winget` / `scoop`
+
+---
+
+## ✦ Contributing
+
+Contributions are welcome! If you have a feature idea or found a bug, feel free to [open an issue](https://github.com/LQCpaka/mini_htop/issues) or submit a pull request.
+
+```bash
+# Run in dev mode
+cargo run
+
+# Lint
+cargo clippy
+
+# Format
+cargo fmt
+```
+
+---
+
+## ✦ License
+
+Released under the [MIT License](./LICENSE). Free to use, modify, and distribute.
+
+---
+
+<div align="center">
+
+Made with 🦀 and a slight hatred for Task Manager.
+
+**[⬆ Back to top](#)**
+
+</div>
