@@ -10,7 +10,6 @@ pub struct App {
     pub cpu_usage: f32,
     pub ram_used: u64,
     pub ram_total: u64,
-    pub disk_used: u64,
     pub processes: Vec<ProcessInfo>,
     pub table_state: TableState,
 
@@ -30,6 +29,7 @@ impl App {
                 .with_memory(MemoryRefreshKind::new().with_ram())
                 .with_processes(ProcessRefreshKind::new().with_cpu().with_memory()),
         );
+
         let mut table_state = TableState::default();
         table_state.select(Some(0)); // select first row by default
 
