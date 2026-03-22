@@ -29,24 +29,21 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
 
     // ================| FOOTER |================
     let footer_text = if app.is_searching {
-        format!(
-            "Gõ tên ứng dụng: {}_ | [Enter]/[Esc] Xong",
-            app.search_query
-        )
+        format!("Type App name: {}_ | [Enter]/[Esc] Done", app.search_query)
     } else if !app.search_query.is_empty() {
         format!(
-            " Đang lọc từ khóa: '{}' | [/] Tìm tiếp | [Esc] Xóa bộ lọc | [q] Thoát",
+            " Filtering: '{}' | [/] Searching | [Esc] Remove Filter | [q] Quit",
             app.search_query
         )
     } else {
-        " [/] Tìm kiếm | [k] Kill | [q] Thoát | [Up/Down] Cuộn chuột ".to_string()
+        " [/] Searching | [k] Kill Task | [q] Quit | [Up/Down] Scroll Mouse ".to_string()
     };
 
     let footer_block = Block::default()
         .title(if app.is_searching {
-            " TÌM KIẾM"
+            " SEARCHING "
         } else {
-            " Hướng dẫn "
+            " HELP "
         })
         .borders(Borders::ALL)
         .border_style(if app.is_searching {
@@ -65,7 +62,7 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
         let target_pid = app.target_pid.as_deref().unwrap_or("0");
 
         let popup_text = format!(
-            "\n Bạn có chắc chắn muốn Kill tiến trình này không? \n\n Name: {} \n PID: {} \n\n [Y] Yes   /   [N] No ",
+            "\n Are you sure that you want kill this task? \n\n Name: {} \n PID: {} \n\n [Y] Yes   /   [N] No ",
             target_name, target_pid
         );
 
@@ -74,7 +71,7 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
             .alignment(ratatui::layout::Alignment::Center)
             .block(
                 Block::default()
-                    .title(" CẢNH BÁO ")
+                    .title(" Warning ")
                     .borders(Borders::ALL)
                     .border_style(Style::default().fg(Color::White)),
             );
@@ -89,7 +86,7 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
     }
 }
 
-// Helper function: Hàm tính toán để tạo một ô hình chữ nhật nằm chính giữa màn hình
+// Helper function: This function calculates how to create a rectangular cell centered on the screen.
 fn centered_rect(
     percent_x: u16,
     percent_y: u16,

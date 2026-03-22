@@ -71,7 +71,7 @@ impl App {
         // formating search query
         let query = self.search_query.to_lowercase();
 
-        // Processes — refresh 2 lần cách nhau để có CPU usage chính xác
+        // Processes — refresh 2 times to get the acurate spec
         self.sys
             .refresh_processes_specifics(ProcessRefreshKind::new().with_cpu().with_memory());
         std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL); // ~200ms
