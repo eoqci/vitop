@@ -30,29 +30,29 @@
 
 ---
 
-## ✦ Why Vitop?
+##  Why Vitop?
 
 Windows has Task Manager. Windows also has 47 background `svchost.exe` processes you'll never understand. **Vitop** cuts through the noise — a snappy, keyboard-driven TUI that lives in your terminal, monitors your machine in real time, and lets you nuke misbehaving processes without touching a mouse.
 
 No Electron. No .NET. No bloat. Just Rust.
 
 
-## ✦ Features
+##  Features
 
 <div align="center">
 
 | | |
 |---|---|
-| 📊 **Live Resource Gauges** | Color-coded CPU and Memory bars that update in real time |
-| 🗂️ **Process Table** | Sorted by memory usage, showing PID, Name, CPU%, and RAM |
-| 🔍 **Fuzzy Search** | Instantly filter through hundreds of processes as you type |
-| 💀 **Safe Kill** | Terminate processes with a built-in confirmation prompt — no accidents |
-| ⚡ **Non-blocking UI** | Separate threads for data collection and rendering; the UI never freezes |
-| 🦀 **Memory Safe** | Zero undefined behavior, guaranteed by the Rust compiler |
+|  **Live Resource Gauges** | Color-coded CPU and Memory bars that update in real time |
+|  **Process Table** | Sorted by memory usage, showing PID, Name, CPU%, and RAM |
+|  **Fuzzy Search** | Instantly filter through hundreds of processes as you type |
+|  **Safe Kill** | Terminate processes with a built-in confirmation prompt — no accidents |
+|  **Non-blocking UI** | Separate threads for data collection and rendering; the UI never freezes |
+|  **Memory Safe** | Zero undefined behavior, guaranteed by the Rust compiler |
 
 </div>
 
-## ✦ Tech Stack
+##  Tech Stack
 
 <div align="center">
 
@@ -65,7 +65,7 @@ No Electron. No .NET. No bloat. Just Rust.
 </div>
 
 
-## ✦ Keybindings
+##  Keybindings
 
 <div align="center">
 
@@ -81,7 +81,7 @@ No Electron. No .NET. No bloat. Just Rust.
 </div>
 
 
-## ✦ Installation
+##  Installation
 
 > **Prerequisite:** [Rust & Cargo](https://rustup.rs/) must be installed.
 
@@ -107,7 +107,7 @@ cargo run --release
 
 
 
-## ✦ Roadmap
+##  Roadmap
 
 - [ ] Network I/O monitoring (upload / download speeds)
 - [ ] Disk usage per drive
@@ -118,7 +118,7 @@ cargo run --release
 
 ---
 
-## ✦ License
+##  License
 
 Released under the [MIT License](./LICENSE). Free to use, modify, and distribute.
 
