@@ -2,6 +2,9 @@
 name = "vitop"
 version = "0.1.0"
 edition = "2024"
+description = "Mô tả app của bạn"   # bắt buộc
+license = "MIT"                       # bắt buộc
+repository = "https://github.com/you/your-app"  # bắt buộc cho CI
 
 [dependencies]
 crossterm = "0.27"
