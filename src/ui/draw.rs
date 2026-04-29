@@ -32,7 +32,7 @@ pub fn draw_ui(f: &mut Frame, app: &mut App) {
         format!("Type App name: {}_ | [Enter]/[Esc] Done", app.search_query)
     } else if !app.search_query.is_empty() {
         format!(
-            " Filtering: '{}' | [/] Searching | [Esc] Remove Filter | [q] Quit",
+            " Filtering: '{}' | [/] Searching | [k] Kill Task | [Esc] Remove Filter | [q] Quit",
             app.search_query
         )
     } else {
