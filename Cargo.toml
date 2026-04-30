@@ -1,10 +1,17 @@
 [package]
+authors = ["LQC", "LQC <lqc@morphworkshop.com>"]
 name = "vitop"
 version = "0.1.0"
 edition = "2024"
 description = "Vitop cuts through the noise — a snappy, keyboard-driven TUI that lives in your terminal, monitors your machine in real time, and lets you nuke misbehaving processes without touching a mouse"
 license = "MIT"
 repository = "https://github.com/you/your-app"
+
+[package.metadata.wix]
+upgrade-guid = "2403F6D7-CAE1-4036-B474-2FFBC6329E66"
+path-guid = "3927D462-5C12-46D1-8E17-4E9E71708321"
+license = false
+eula = false
 
 [dependencies]
 crossterm = "0.27"
