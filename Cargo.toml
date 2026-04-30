@@ -2,9 +2,9 @@
 name = "vitop"
 version = "0.1.0"
 edition = "2024"
-description = "Mô tả app của bạn"   # bắt buộc
-license = "MIT"                       # bắt buộc
-repository = "https://github.com/you/your-app"  # bắt buộc cho CI
+description = "Vitop cuts through the noise — a snappy, keyboard-driven TUI that lives in your terminal, monitors your machine in real time, and lets you nuke misbehaving processes without touching a mouse"
+license = "MIT"
+repository = "https://github.com/you/your-app"
 
 [dependencies]
 crossterm = "0.27"
@@ -20,3 +20,9 @@ features = [
     "Win32_System_Threading",
     "Win32_UI_WindowsAndMessaging",
 ]
+
+[profile.dist]
+inherits = "release"
+lto = "thin"
+codegen-units = 1
+strip = true
