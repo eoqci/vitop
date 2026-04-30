@@ -116,8 +116,3 @@ Released under the [MIT License](./LICENSE). Free to use, modify, and distribute
 
 <div align="center">
 
-Made with 🦀 and a slight hatred for Task Manager.
-
-**[⬆ Back to top](#)**
-
-</div>
