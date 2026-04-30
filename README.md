@@ -85,22 +85,12 @@ No Electron. No .NET. No bloat. Just Rust.
 
 > **Prerequisite:** [Rust & Cargo](https://rustup.rs/) must be installed.
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/LQCpaka/mini_htop.git
-cd mini_htop
+You could download it from Release tab. And install it.
 
-# 2. Build in release mode
-cargo build --release
-
-# 3. Run it
-./target/release/vitop
-```
-
-Or just run without a separate build step:
+Only things you need to do is run this cmd on cmd/pwsh/run, whatever allows to excute binary path. It's very simple:
 
 ```bash
-cargo run --release
+vitop
 ```
 
 ---
