@@ -97,17 +97,6 @@ vitop
 
 
 
-##  Roadmap
-
-- [ ] Network I/O monitoring (upload / download speeds)
-- [ ] Disk usage per drive
-- [ ] Sortable columns (click or key to sort by CPU, RAM, PID, Name)
-- [ ] Process tree view
-- [ ] Config file for custom colors / refresh rate
-- [ ] Package via `winget` / `scoop`
-
----
-
 ##  License
 
 Released under the [MIT License](./LICENSE). Free to use, modify, and distribute.
